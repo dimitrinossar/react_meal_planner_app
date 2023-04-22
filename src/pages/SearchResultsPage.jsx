@@ -4,6 +4,11 @@ import { db } from '../index'
 import { addDoc, collection } from 'firebase/firestore'
 import Pagination from '../components/Pagination'
 import '../css/SearchResultsPage.css'
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
+import Form from 'react-bootstrap/Form'
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+
 export default function SearchResultsPage() {
   const [results, setResults] = useState([])
   const [recipeAdded, setRecipeAdded] = useState(false)
@@ -11,7 +16,10 @@ export default function SearchResultsPage() {
   const [resultsPerPage] = useState(10)
   const [loading, setLoading] = useState(false)
   const [diplayResults, setDisplayResults] = useState(true)
-
+  const [selectedIndex, setSelectedIndex] = useState(null)
+  const [show, setShow] = useState(false)
+  const [mealPlans, setMealPlans] = useState(null)
+  const [newMealPlan, setNewMealPlan] = useState(null)
   const { keyword } = useParams()
   useEffect(() => {
     setLoading(true)
@@ -26,8 +34,11 @@ export default function SearchResultsPage() {
   }, [keyword])
 
   const recipeCollectionsRef = collection(db, 'recipes')
-  const handleAdd = async (id, { recipe }) => {
-    console.log(recipe, id)
+
+  const handleClose = () => setShow(false)
+  const handleAddRec = async (id, { recipe }, index) => {
+    setShow(true)
+    setSelectedIndex(index)
     try {
       await addDoc(recipeCollectionsRef, {
         name: recipe.label,
@@ -53,11 +64,13 @@ export default function SearchResultsPage() {
   const handleDisplay = () => {
     setDisplayResults(!diplayResults)
   }
+  const handleAddtoMealPlan = () => {} // function to add the recipe to the meal plan
+  const handleAddNewMealPlan = () => {} // function to add the new meal plan and the recipe to the database }
 
   return (
     <section className="results-section">
       <header>
-        <h1>Search Results</h1>
+        <h1>Search Results :</h1>
         <div>
           <button className="list" onClick={handleDisplay}>
             {diplayResults ? 'Title' : 'List'}
@@ -73,37 +86,80 @@ export default function SearchResultsPage() {
               const uri = result.recipe.uri
               const id = uri.substring(uri.indexOf('_') + 1, uri.length)
               return (
-                <li key={index}>
-                  <Link to={`/recipes/${id}`}>
+                <>
+                  <li key={index}>
+                    <Link to={`/recipes/${id}`}>
+                      <div>
+                        <img src={result.recipe.image} alt="" />
+                      </div>
+                      <footer>
+                        <h2>{result.recipe.label}</h2>
+                        <span>{result.recipe.dietLabels.join(' ')}</span>
+                        <span>
+                          {result.recipe.healthLabels.splice(0, 3).join(', ')}
+                        </span>
+                        {result.recipe.totalTime > 0 ? (
+                          <span>Made in {result.recipe.totalTime} mins</span>
+                        ) : null}
+                      </footer>
+                    </Link>
+                    {console.log(result.recipe.dietLabels)}
                     <div>
-                      <img src={result.recipe.image} alt="" />
+                      <Button
+                        variant="primary"
+                        onClick={() => handleAddRec(id, result, index)}
+                        disabled={recipeAdded && selectedIndex === index}
+                        className="add-btn"
+                      >
+                        <AiOutlineHeart /> Add to My Recipes
+                      </Button>
+
+                      {recipeAdded && selectedIndex === index ? (
+                        <>
+                          <Link to="/my-recipes">
+                            {
+                              <span className="message-added">
+                                <AiFillHeart />
+                                ADDED Go to My Recipes
+                              </span>
+                            }
+                          </Link>
+                        </>
+                      ) : null}
                     </div>
-                    <footer>
-                      <h2>{result.recipe.label}</h2>
-                      <span>{result.recipe.dietLabels}</span>
-                      <span>Made in {result.recipe.totalTime} mins</span>
-                    </footer>
-                  </Link>
-                  <button
-                    onClick={() => handleAdd(id, result)}
-                    disabled={recipeAdded}
-                  >
-                    Add to My Recipes
-                  </button>
-                  {recipeAdded ? (
-                    <>
-                      <Link to="/my-recipes">
-                        <span>ADDED Go to My Recipes</span>
-                      </Link>
-                    </>
-                  ) : null}
-                </li>
+                  </li>
+                  <Modal show={show} onHide={handleClose} animation={false}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Save recipe</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>{result.recipe.label} recipe</Modal.Body>
+                    <Form.Select
+                      aria-label="Default select example"
+                      onChange={handleAddtoMealPlan}
+                    >
+                      <option>Save into your meal plan</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </Form.Select>
+                    <Form.Text>Or, you can make a new meal plan</Form.Text>
+                    <Form.Control
+                      type="text"
+                      placeholder="new plan name"
+                      onChange={handleAddNewMealPlan}
+                    />
+                    <Modal.Footer>
+                      <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </>
               )
             })}
           </ul>
         </>
       )}
-
       <Pagination
         resultsPerPage={resultsPerPage}
         totalResults={results.length}

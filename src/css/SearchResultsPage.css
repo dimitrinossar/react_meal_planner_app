@@ -9,6 +9,7 @@
 .results-section * {
   color: #091e42;
 }
+
 .results-section header {
   background-color: #eae6ff;
   padding: 5px 10px;
@@ -40,6 +41,12 @@
   align-items: center;
   justify-content: space-between;
 }
+.results-section .display-list li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 .results-section .display-title li a {
   text-align: center;
 }
@@ -61,8 +68,9 @@
 
 .results-section .display-list li,
 .results-section .display-title li {
+  margin: 10px auto;
+  width: 80%;
   list-style: none;
-  margin: 10px;
   background-color: #e6fcff;
   border-radius: 10px;
   padding: 10px;
@@ -131,4 +139,15 @@
   width: 100%;
   display: flex;
   justify-content: space-evenly;
+}
+
+.message-added {
+  font-size: 0.7rem;
+  margin: 5px;
+}
+
+.display-list div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

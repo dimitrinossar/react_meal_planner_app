@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '..'
+import AlertDismissible from '../components/AlertDismissible'
 import '../css/LogInPage.css'
 
 export default function LoginPage({ onLogin }) {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
+  const [error, setError] = useState('')
   const navigate = useNavigate()
 
   const handleChange = ({ target }) => {
@@ -20,7 +22,7 @@ export default function LoginPage({ onLogin }) {
         navigate('/')
       })
       .catch((error) => {
-        console.log(error)
+        setError(error.message)
       })
   }
 
@@ -33,6 +35,7 @@ export default function LoginPage({ onLogin }) {
         <label htmlFor="">Password</label>
         <input type="password" value={loginInfo.password} name="password" />
         <button>Login</button>
+        {error.message && <AlertDismissible error={error} />}
       </form>
     </section>
   )
