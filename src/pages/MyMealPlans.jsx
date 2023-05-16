@@ -82,8 +82,8 @@ export default function MyMealPlans({ user, loading }) {
           Saturday: { id: uuid(), day: 'Saturday', recipe_ids: [] },
           Sunday: { id: uuid(), day: 'Sunday', recipe_ids: [] },
         },
-        recipes: {}, // contains id: {id: ... name: ... } maybe whole thing from my recipes?
-        user_id: user.uid, // use userid or username
+        recipes: {},
+        user_id: user.uid,
         created_at: serverTimestamp(),
       })
       getMealPlans()
@@ -113,25 +113,25 @@ export default function MyMealPlans({ user, loading }) {
         <p>Loading...</p>
       ) : (
         <>
-          <h1>{user.displayName}&#39;s Plans</h1>
+          <h1>{user.displayName}&#39;s meal plans</h1>
           <Row xs={1} md={4}>
             {mealPlans?.map((mealPlan) => (
               <Col key={mealPlan.id}>
                 <div className="meal-plans">
                   <Card>
                     <Card.Body>
-                      <Link to={`/my-meal-plans/${mealPlan.id}`}>
+                      <div className="plan">
                         <Card.Title>{mealPlan.name}</Card.Title>
-                      </Link>
-                      {/* <Button> Go to meal plan</Button> */}
-                      <Button
-                        className="delete-btn"
+                        <Link to={`/my-meal-plans/${mealPlan.id}`}>
+                          <button>Go to Plan</button>
+                        </Link>
+                      </div>
+                      <div
                         onClick={() =>
                           handleDeletePrompt(mealPlan.name, mealPlan.id)
                         }
-                      >
-                        Delete
-                      </Button>
+                        className="delete"
+                      />
                     </Card.Body>
                   </Card>
                 </div>

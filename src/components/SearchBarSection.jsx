@@ -48,9 +48,7 @@ export default function SearchBarSection() {
               name="health"
               className="filter"
             >
-              <option value="" selected>
-                Dietary requirements
-              </option>
+              <option value="">Dietary requirements</option>
               {dietaryRequirements.map((exclusion, index) => (
                 <option key={index} value={exclusion.toLowerCase()}>
                   {exclusion}

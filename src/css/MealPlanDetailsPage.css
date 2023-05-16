@@ -4,19 +4,26 @@
 
 .meal-plan {
   text-align: center;
-  margin: 10px auto;
-  height: 75vh;
-  /* font-size: 1rem; */
-  background-color: #8993a4;
-  width: 90%;
+  margin: 20px auto;
+  background-color: #9fcec7;
+  width: 80%;
+  /* max-width: max-content; */
   border-radius: 10px;
   box-shadow: 10px 10px 21px -1px rgba(0, 0, 0, 0.75);
-  border: 1px solid black;
   padding: 10px;
 }
 
 .grid {
   display: flex;
   justify-content: center;
-  gap: 2px;
+  align-items: start;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .meal-plan {
+    width: max-content;
+    margin: 20px 5px;
+  }
 }

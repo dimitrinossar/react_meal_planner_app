@@ -56,16 +56,15 @@ export default function UserPage({ user, loading }) {
               <div className="img-wrapper">
                 <img src={user.photoURL} alt="" />{' '}
               </div>
-              <label htmlFor="">Want to change your account info?</label>
               <button onClick={handleEdit} className="edit-btn">
-                {isEditing ? 'Cancel' : 'Edit'}
+                {isEditing ? 'Cancel' : 'Edit profile'}
               </button>
             </div>
           ) : (
             <div className="edit-profile">
-              <label htmlFor="">change your username: </label>
+              <label htmlFor="">change username: </label>
               <input type="text" value={username} onChange={handleUsername} />
-              <label htmlFor=""> upload a profile image or change yours:</label>
+              <label htmlFor=""> change profile image: </label>
               <input type="file" accept="image/*" onChange={handleFile} />
               <footer className="edit-btns">
                 <button onClick={handleEdit} className="edit-btn">

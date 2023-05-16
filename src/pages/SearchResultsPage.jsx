@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Link, useSearchParams, useNavigate } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { db } from '../index'
 import { addDoc, getDoc, collection, serverTimestamp } from 'firebase/firestore'
-import Pagination from '../components/Pagination'
 import '../css/SearchResultsPage.css'
-import Button from 'react-bootstrap/Button'
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import Pagination from '../components/Pagination'
 import AddToMealplanPopUp from '../components/AddToMealplanPopUp'
+import SearchResult from '../components/SearchResult'
 
 export default function SearchResultsPage({ user, loading }) {
   const [results, setResults] = useState([])
@@ -21,12 +20,14 @@ export default function SearchResultsPage({ user, loading }) {
 
   const [params] = useSearchParams()
   const navigate = useNavigate()
+  const search = [...params].map((pair) => pair[1]).join(' & ')
 
   useEffect(() => {
     setLoadingResults(true)
     const queryString = [...params].reduce((query, [key, value]) => {
       return query + `&${key}=${value}`
     }, '')
+
     fetch(
       `https://api.edamam.com/search?app_id=${process.env.REACT_APP_EDAMAM_APP_ID}&app_key=${process.env.REACT_APP_EDAMAM_API_KEY}${queryString}&from=0&to=100`,
     )
@@ -76,10 +77,10 @@ export default function SearchResultsPage({ user, loading }) {
   return (
     <section className="results-section">
       <header>
-        <h1>Search Results :</h1>
+        <h1>Search Results for &quot;{search}&quot;</h1>
         <div>
-          <button className="list" onClick={handleDisplay}>
-            {diplayResults ? 'Display as Tiles' : 'Display as List'}
+          <button className="toggle-mode-btn" onClick={handleDisplay}>
+            {diplayResults ? 'Display as List' : 'Display as Tiles'}
           </button>
         </div>
       </header>
@@ -89,70 +90,21 @@ export default function SearchResultsPage({ user, loading }) {
         <>
           {results.length !== 0 ? (
             <>
-              <ul className={diplayResults ? 'display-list' : 'display-title'}>
+              <ul className={diplayResults ? 'display-tile' : 'display-list'}>
                 {currentResults.map((result, index) => {
                   const uri = result.recipe.uri
                   const id = uri.substring(uri.indexOf('_') + 1, uri.length)
                   return (
-                    <>
-                      <li key={index}>
-                        <Link to={`/recipes/${id}`}>
-                          <div>
-                            <img src={result.recipe.image} alt="" />
-                          </div>
-                          <footer>
-                            <h2>{result.recipe.label}</h2>
-                            {result.recipe.dietLabels &&
-                              result.recipe.dietLabels.length > 0 && (
-                                <span>
-                                  Diet labels:{' '}
-                                  {result.recipe.dietLabels.join(' ')}
-                                </span>
-                              )}
-
-                            <span>
-                              {' '}
-                              Health Labels:{' '}
-                              {result.recipe.healthLabels
-                                .splice(0, 3)
-                                .join(', ')}
-                            </span>
-                            {result.recipe.totalTime > 0 ? (
-                              <span>
-                                Made in {result.recipe.totalTime} mins
-                              </span>
-                            ) : null}
-                          </footer>
-                        </Link>
-                        <div>
-                          <Button
-                            variant="primary"
-                            onClick={() => handleAddRec(id, result, index)}
-                            disabled={recipeAdded && selectedIndex === index}
-                            className="add-btn"
-                          >
-                            <AiOutlineHeart /> Add to My Recipes
-                          </Button>
-                          {recipeAdded && selectedIndex === index && (
-                            <>
-                              <Link to="/my-recipes">
-                                {
-                                  <span className="message-added">
-                                    <AiFillHeart />
-                                    ADDED Go to My Recipes
-                                  </span>
-                                }
-                              </Link>
-                            </>
-                          )}
-                          {recipeAdded && selectedIndex === index && (
-                            <Button onClick={() => setShowAdd(true)}>
-                              Add to meal plan
-                            </Button>
-                          )}
-                        </div>
-                      </li>
-                    </>
+                    <SearchResult
+                      key={index}
+                      id={id}
+                      result={result}
+                      index={index}
+                      recipeAdded={recipeAdded}
+                      selectedIndex={selectedIndex}
+                      handleAddRec={handleAddRec}
+                      setShowAdd={setShowAdd}
+                    />
                   )
                 })}
               </ul>

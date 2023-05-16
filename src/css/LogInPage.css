@@ -8,36 +8,33 @@
   align-items: center;
   gap: 20px;
   border-radius: 10px;
-  background-color: #8993a4;
+  background-color: #e6fcff;
   box-shadow: 10px 10px 21px -1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 10px 10px 21px -1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 10px 21px -1px rgba(0, 0, 0, 0.75);
-  border: 1px solid black;
   flex-wrap: wrap;
 }
+
 /* @media screen and (min-width: 768px) {
   .login-section form {
-    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
   }
-}
-@media screen and (min-width: 1024px) {
+} */
+/* @media screen and (min-width: 1024px) {
   .login-section form {
-    flex-basis: calc(
-      100% / 3
-    ); 
+    flex-basis: calc(100% / 3);
   }
 } */
 .login-title {
-  font-family: 'Noto Serif', serif;
   font-size: 2rem;
   font-weight: 600;
   color: #091e42;
+  font-family: 'Courgette', cursive;
 }
 .login-section form {
-  flex-basis: 100%;
   border-radius: 10px;
-  display: flex;
-  justify-content: space-around;
 }
 .login-section form input {
   border-radius: 10px;
@@ -46,9 +43,30 @@
   margin: 0 6px;
 }
 .login-section form button {
-  border-radius: 10px;
-  margin-left: 15px;
-  border: 1px solid black;
-  background-color: #e6fcff;
+  background-color: #9fcec7;
+  border: 2px solid #9fcec7;
   color: #091e42;
+  margin: 10px 15px;
+  transition: all 250ms;
+  border-radius: 15px;
+}
+
+.login-section form button:hover {
+  background-color: #9fcec7;
+  border: 2px solid #047a46;
+  color: #091e42;
+}
+
+@media screen and (max-width: 768px) {
+  .login-section form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .login-section form button {
+    margin: 20px auto;
+    padding: 5px 20px;
+  }
 }

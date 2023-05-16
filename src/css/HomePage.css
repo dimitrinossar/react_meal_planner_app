@@ -75,6 +75,7 @@
   color: white;
   font-size: 1.2rem;
   text-transform: uppercase;
+  transition: all 250ms;
 }
 
 .btn-submit:hover {
@@ -125,7 +126,6 @@
 }
 
 .categories h1 {
-  /* text-shadow: -2px 2px 2px rgba(9, 5, 5, 0.6); */
   font-size: 2rem;
   font-weight: 600;
   text-decoration: none;
@@ -173,6 +173,7 @@
   width: 100%;
   padding: 2px 10px;
   background-color: #fdfdfd8a;
+  transition: all 250ms;
 }
 
 .categories a:hover h4 {
@@ -180,12 +181,11 @@
 }
 
 @media screen and (max-width: 768px) {
-  /* .popular-searches,
-  .random-recipes {
-    flex-wrap: wrap;
-  } */
   .categories img {
-    width: 150px;
-    height: 150px;
+    width: 125px;
+    height: 125px;
+  }
+  .categories h4 {
+    font-size: 1rem;
   }
 }

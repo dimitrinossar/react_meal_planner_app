@@ -8,15 +8,15 @@
   align-items: center;
   gap: 20px;
   border-radius: 10px;
-  background-color: #8993a4;
+  background-color: #9fcec7;
   box-shadow: 10px 10px 21px -1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 10px 10px 21px -1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 10px 21px -1px rgba(0, 0, 0, 0.75);
-  border: 1px solid black;
 }
 
 .username {
   font-weight: bold;
+  font-family: 'Courgette', cursive;
 }
 
 .img-wrapper {
@@ -37,9 +37,19 @@
   align-items: center;
   gap: 20px;
   border-radius: 10px;
-  background-color: #8993a4;
+  background-color: #9fcec7;
   box-shadow: 10px 10px 21px -1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 10px 10px 21px -1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 10px 21px -1px rgba(0, 0, 0, 0.75);
-  border: 1px solid black;
 }
+
+/* button {
+  margin: 1px auto;
+  border-radius: 15px;
+  background-color: #047a46;
+  padding: 5px 10px;
+  color: white;
+  font-size: 0.9rem;
+  border: 0;
+  transition: all 250ms;
+} */

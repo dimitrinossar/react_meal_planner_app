@@ -36,32 +36,32 @@ export default function NavBar({ user, loading }) {
               </NavLink>
             ) : (
               <>
-                <NavLink eventKey="1" to="/" className="home">
+                <NavLink eventkey="1" to="/" className="home">
                   <AiFillHome size={20} />
                 </NavLink>
                 {user ? (
                   <div className="logged-in">
-                    <NavLink eventKey="4" to={`/user/${user.uid}`}>
+                    <NavLink eventkey="4" to={`/user/${user.uid}`}>
                       Hello {user.displayName}
                     </NavLink>
-                    <NavLink eventKey="2" to="/my-recipes">
+                    <NavLink eventkey="2" to="/my-recipes">
                       My Recipes
                     </NavLink>
-                    <NavLink eventKey="3" to="/my-meal-plans">
+                    <NavLink eventkey="3" to="/my-meal-plans">
                       My Meal Plans
                     </NavLink>
                     <NavDropdown.Divider />
-                    <NavLink eventKey="5">
+                    <NavLink eventkey="5">
                       <button onClick={handleLogout}>Log out</button>
                     </NavLink>
                   </div>
                 ) : (
                   <div className="login-signup">
-                    <NavLink eventKey="2" to="/login">
+                    <NavLink eventkey="2" to="/login">
                       Log in
                     </NavLink>
                     <span>/</span>
-                    <NavLink eventKey="4" to="/signup">
+                    <NavLink eventkey="4" to="/signup">
                       Sign up
                     </NavLink>
                   </div>

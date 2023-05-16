@@ -12,6 +12,7 @@ import {
 import '../css/MyRecipesPage.css'
 import Pagination from '../components/Pagination'
 import AddToMealplanPopUp from '../components/AddToMealplanPopUp'
+import { Link } from 'react-router-dom'
 export default function MyRecipesPage({ user, loading }) {
   const [recipeList, setRecipeList] = useState([])
   const [showAdd, setShowAdd] = useState(false)
@@ -69,6 +70,10 @@ export default function MyRecipesPage({ user, loading }) {
   return (
     <section className="myrecipes-section">
       <h1>My recipes</h1>
+      <p className="noteOnApi">
+        Note: due to the 3rd party API used, images may not load after a period
+        of time from adding
+      </p>
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -80,16 +85,24 @@ export default function MyRecipesPage({ user, loading }) {
               {currentResults.map((recipe) => {
                 return (
                   <div key={recipe.id} className="ui-card-myrecipes">
-                    <h1>{recipe.name}</h1>
-                    <img src={recipe.image} alt="" />
-                    <p>{recipe.createdAt.toDate().toLocaleDateString()}</p>
-                    <p>{recipe.createdAt.toDate().toLocaleTimeString()}</p>
-                    <button onClick={() => deleteRecipe(recipe.id)}>
-                      Delete Recipe
-                    </button>
-                    <button onClick={() => handleShowAdd(recipe)}>
-                      Add to a meal plan
-                    </button>
+                    <div className="recipe-details">
+                      <Link to={`/recipes/${recipe.edamam_id}`}>
+                        <img src={recipe.image} alt={recipe.name} />
+                        <h2>{recipe.name}</h2>
+                      </Link>
+                    </div>
+                    <p className="time-stamp">
+                      Added on {recipe.createdAt.toDate().toLocaleDateString()}
+                      &nbsp;at {recipe.createdAt.toDate().toLocaleTimeString()}
+                    </p>
+                    <div className="buttons">
+                      <button onClick={() => deleteRecipe(recipe.id)}>
+                        Delete recipe
+                      </button>
+                      <button onClick={() => handleShowAdd(recipe)}>
+                        Add to meal plan
+                      </button>
+                    </div>
                   </div>
                 )
               })}

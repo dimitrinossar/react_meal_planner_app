@@ -99,6 +99,10 @@ export default function MealPlanPage() {
           })}
         </DragDropContext>
       </div>
+      <p className="noteOnApi">
+        Note: due to the 3rd party API used, images may not load after a period
+        of time from adding
+      </p>
     </div>
   )
 }

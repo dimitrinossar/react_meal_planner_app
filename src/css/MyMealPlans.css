@@ -1,46 +1,111 @@
+/* header */
 .myplans-sections {
   width: 80%;
-  height: 70vh;
   margin: 20px auto;
   padding: 20px;
   border-radius: 10px;
-  background-image: url('https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=1600');
+  background-color: #9fcec7;
 }
 .myplans-sections h1 {
   font-family: 'Courgette', cursive;
 }
-
+/* meal plans */
 .meal-plans {
   margin: 10px auto;
+  text-align: center;
 }
 
 .card-body {
   background-color: #e6fcff;
   border-radius: 10px;
+  position: relative;
+  transition: all 250ms;
 }
+
 .card-body * {
   color: #4b4f61a9;
-}
-.card-body * {
   text-decoration: none;
 }
-.card-body button {
-  color: #4b4f61a9;
-  background-color: #a6b7ba;
-  align-self: center;
-  border-radius: 10px;
-  margin: 10px auto;
-  font-size: 0.8rem;
-  border: none;
-  box-shadow: 10px 9px 5px -4px rgba(0, 0, 0, 0.75);
+
+.card-body:hover {
+  transform: scale(1.05);
 }
-.add-btn-mealplan button {
-  font-size: 0.8rem;
-  color: #4b4f61a9;
-  background-color: #a6b7ba;
-  align-self: center;
+
+.plan button {
   border-radius: 10px;
-  margin: 20px auto;
-  border: none;
-  box-shadow: 10px 9px 5px -4px rgba(0, 0, 0, 0.75);
+  background-color: #9fcec7;
+  border: 2px solid #9fcec7;
+  color: #091e42;
+  transition: all 250ms;
+  font-size: 0.9rem;
+}
+
+.plan button:hover {
+  background-color: #9fcec7;
+  border: 2px solid #047a46;
+  color: #091e42;
+}
+
+/* delete button */
+.delete {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  opacity: 0.3;
+  visibility: hidden;
+}
+
+.card-body:hover .delete {
+  visibility: visible;
+}
+
+.delete:hover {
+  opacity: 1;
+}
+
+.delete:before,
+.delete:after {
+  position: absolute;
+  left: 5px;
+  content: ' ';
+  height: 15px;
+  width: 3px;
+  background-color: #333;
+}
+
+.delete:before {
+  transform: rotate(45deg);
+}
+
+.delete:after {
+  transform: rotate(-45deg);
+}
+
+@media screen and (max-width: 575px) {
+  .delete {
+    visibility: visible;
+  }
+}
+
+/* add meal plan */
+.add-btn-mealplan button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px auto;
+  border-radius: 15px;
+  padding: 5px 10px;
+  background-color: #047a46;
+  color: white;
+  font-size: 0.75rem;
+  border: 1px solid #047a46;
+  transition: all 250ms;
+}
+
+.add-btn-mealplan button:hover {
+  background-color: #034c2c;
+  border: 1px solid white;
 }

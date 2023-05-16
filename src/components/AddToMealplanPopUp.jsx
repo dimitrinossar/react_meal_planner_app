@@ -25,20 +25,22 @@ export default function AddToMealplanPopUp({
   const [selectedPlanner, setSelectedPlanner] = useState('default')
   const mealPlansRef = collection(db, 'mealplans')
   const getMealPlans = async () => {
-    const q = query(
-      mealPlansRef,
-      where('user_id', '==', user.uid),
-      orderBy('created_at', 'desc'),
-    )
-    try {
-      const data = await getDocs(q)
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }))
-      setMealPlans(filteredData)
-    } catch (err) {
-      console.log(err)
+    if (user) {
+      const q = query(
+        mealPlansRef,
+        where('user_id', '==', user.uid),
+        orderBy('created_at', 'desc'),
+      )
+      try {
+        const data = await getDocs(q)
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }))
+        setMealPlans(filteredData)
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 
@@ -133,7 +135,7 @@ export default function AddToMealplanPopUp({
       <Modal.Header closeButton>
         <Modal.Title>
           Which meal planner do you want to add <i>{selectedRecipe.name}</i>
-          to?
+          &nbsp;to?
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
